@@ -1,0 +1,128 @@
+/* ===== PAGES ADDITIONAL STYLES ===== */
+
+/* Smooth page transitions */
+.page {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Notification items hover */
+.table-container > div > div[style*="border-bottom"]:hover {
+  background: rgba(59,130,246,0.04);
+}
+
+/* Schedule grid cells */
+.schedule-grid table td {
+  border-right: 1px solid var(--border-color);
+}
+.schedule-grid table td:last-child {
+  border-right: none;
+}
+
+/* Card hover effects */
+.stat-card {
+  transition: var(--transition);
+}
+.stat-card:hover {
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.card {
+  transition: var(--transition);
+}
+
+/* Login animation */
+.login-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.login-card {
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Nav item icon animation */
+.sidebar-nav .nav-item i {
+  transition: transform 0.2s ease;
+}
+.sidebar-nav .nav-item:hover i {
+  transform: scale(1.15);
+}
+
+/* Button press effect */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Table row highlight animation */
+table tbody tr {
+  transition: background 0.2s ease;
+}
+
+/* Badge pulse for urgent */
+.badge-red {
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 8px rgba(239,68,68,0.3); }
+}
+
+/* Donut chart */
+.donut-chart {
+  position: relative;
+}
+
+/* Progress bars animation */
+.card div[style*="overflow:hidden"] > div {
+  animation: growBar 1s ease forwards;
+}
+
+@keyframes growBar {
+  from { width: 0; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

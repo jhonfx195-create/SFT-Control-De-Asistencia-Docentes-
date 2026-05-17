@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de Control de Asistencia Institucional ULEAM - Gestión de docentes, horarios y reportes.">
+  <title>Asistencia ULEAM - Sistema de Control de Acceso Institucional</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ===== LOGIN OVERLAY ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-icon"><i class="fas fa-graduation-cap"></i></div>
+    <h2>Asistencia ULEAM</h2>
+    <p class="subtitle">Sistema de Control de Acceso Institucional</p>
+    <p class="role-label">SELECCIONAR ROL</p>
+    <div class="role-selector">
+      <button class="role-btn active" data-role="admin" id="roleAdmin">
+        <i class="fas fa-user-shield"></i> Administrador
+      </button>
+      <button class="role-btn" data-role="docente" id="roleDocente">
+        <i class="fas fa-chalkboard-teacher"></i> Docente
+      </button>
+    </div>
+    <div class="login-field">
+      <label>Correo Institucional</label>
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" placeholder="usuario@uleam.edu.ec" id="loginEmail">
+      </div>
+    </div>
+    <div class="login-field">
+      <label>Contraseña <a href="#">¿Olvidó su clave?</a></label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="••••••••" id="loginPassword">
+        <button class="toggle-pw" id="togglePw"><i class="fas fa-eye"></i></button>
+      </div>
+    </div>
+    <button class="btn-login" id="btnLogin">Ingresar <i class="fas fa-arrow-right-to-bracket"></i></button>
+    <p class="login-footer-text">¿Necesita soporte técnico? <a href="#">Contactar al Departamento de TI</a></p>
+    <div class="login-badges">
+      <span><i class="fas fa-shield-halved"></i> Sesión Segura</span>
+      <span><i class="fas fa-gear"></i> Control Centralizado</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP LAYOUT ===== -->
+<div class="app-layout" id="appLayout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="brand-text">
+        <h2>ULEAM Admin</h2>
+        <span>Control de Asistencia</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Panel de Control</div>
+      <div class="nav-item" data-page="docentes"><i class="fas fa-user-graduate"></i> Docentes</div>
+      <div class="nav-item" data-page="horarios"><i class="fas fa-calendar-alt"></i> Horarios</div>
+      <div class="nav-item" data-page="justificaciones"><i class="fas fa-file-alt"></i> Justificaciones</div>
+      <div class="nav-item" data-page="notificaciones"><i class="fas fa-bell"></i> Notificaciones</div>
+      <div class="nav-item" data-page="reportes"><i class="fas fa-chart-bar"></i> Reportes</div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="nav-item"><i class="fas fa-cog"></i> Configuración</div>
+      <div class="nav-item" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar docente o facultad...">
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn"><i class="fas fa-bell"></i></button>
+        <button class="icon-btn"><i class="fas fa-circle-question"></i></button>
+        <div class="header-user">
+          <div class="user-info">
+            <div class="name">Usuario Admin</div>
+            <div class="role">Super Administrador</div>
+          </div>
+          <div class="avatar">UA</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== PAGE: DASHBOARD ===== -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-content">
+        <div class="page-header">
+          <div>
+            <h1>Panel de Control</h1>
+            <p>Seguimiento de presencia docente para el 15 de Nov, 2023</p>
+          </div>
+          <div class="header-btns">
+            <button class="btn btn-outline"><i class="fas fa-filter"></i> Filtrar</button>
+            <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Añadir Docente</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div>
+              <div class="stat-icon blue"><i class="fas fa-user-check"></i></div>
+              <div class="stat-label" style="margin-top:12px;">Asistencia de Hoy %</div>
+              <div class="stat-value">94.2%</div>
+            </div>
+            <div class="stat-change up">+2.4%</div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
+              <div class="stat-label" style="margin-top:12px;">Atrasos Detectados</div>
+              <div class="stat-value">12</div>
+            </div>
+            <div class="stat-change up">+5</div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-icon red"><i class="fas fa-file-circle-exclamation"></i></div>
+              <div class="stat-label" style="margin-top:12px;">Justificaciones Pendientes</div>
+              <div class="stat-value">28</div>
+            </div>
+            <div class="stat-change down">-12%</div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Registros de Asistencia Recientes</h3>
+            <a href="#">Ver Todo</a>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Docente</th>
+                <th>Facultad</th>
+                <th>Fecha</th>
+                <th>Programado</th>
+                <th>Entrada Real</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">ER</div>
+                    <div><strong>Dra. Elena Rodriguez</strong><br><small style="color:var(--text-muted)">ID Facultad: U-4421</small></div>
+                  </div>
+                </td>
+                <td>Ingeniería</td>
+                <td>15 Nov, 2023</td>
+                <td>08:00 AM</td>
+                <td>07:54 AM</td>
+                <td><span class="badge badge-green">Presente</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#f97316,#eab308);">MV</div>
+                    <div><strong>Prof. Marco Velez</strong><br><small style="color:var(--text-muted)">ID Facultad: U-8812</small></div>
+                  </div>
+                </td>
+                <td>Administración de Empresas</td>
+                <td>15 Nov, 2023</td>
+                <td>09:30 AM</td>
+                <td style="color:var(--accent-red);font-weight:600;">09:48 AM</td>
+                <td><span class="badge badge-yellow">Atraso</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);">SL</div>
+                    <div><strong>Lic. Silvia Luna</strong><br><small style="color:var(--text-muted)">ID Facultad: U-3109</small></div>
+                  </div>
+                </td>
+                <td>Comunicación</td>
+                <td>15 Nov, 2023</td>
+                <td>11:00 AM</td>
+                <td>--:--</td>
+                <td><span class="badge badge-red">Ausente</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#22c55e,#14b8a6);">JC</div>
+                    <div><strong>Dr. Julian Casales</strong><br><small style="color:var(--text-muted)">ID Facultad: U-5501</small></div>
+                  </div>
+                </td>
+                <td>Ciencias de la Computación</td>
+                <td>15 Nov, 2023</td>
+                <td>07:00 AM</td>
+                <td>06:58 AM</td>
+                <td><span class="badge badge-green">Presente</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="card" style="overflow:hidden;padding:0;">
+            <div style="background:linear-gradient(135deg,#1e293b,#334155);padding:20px;position:relative;min-height:180px;">
+              <div style="position:absolute;bottom:12px;left:16px;">
+                <small style="color:var(--accent-gold);text-transform:uppercase;font-weight:600;font-size:11px;">Estado Institucional</small>
+                <div style="font-size:15px;font-weight:600;margin-top:4px;">Campus Principal - Manta, Ecuador</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <h3 style="font-size:18px;font-weight:700;">Estado del Sistema</h3>
+              <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);"><span style="width:8px;height:8px;background:var(--accent-green);border-radius:50%;display:inline-block;"></span> EN VIVO</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Escáneres biométricos activos en 4 facultades.</p>
+            <div style="margin-top:20px;display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border-color);">
+              <span style="font-size:13px;color:var(--text-secondary);">Escáneres Activos</span>
+              <span style="font-weight:700;">14 / 14</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border-color);">
+              <span style="font-size:13px;color:var(--text-secondary);">Latencia de Sincronización Cloud</span>
+              <span style="font-weight:700;">42ms</span>
+            </div>
+            <div style="margin-top:8px;height:4px;background:var(--bg-input);border-radius:2px;overflow:hidden;">
+              <div style="width:85%;height:100%;background:var(--accent-blue);border-radius:2px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: DOCENTES ===== -->
+    <div class="page" id="page-docentes">
+      <div class="page-content">
+        <div class="page-header">
+          <div>
+            <h1>Gestión de Docentes</h1>
+            <p>Administra el personal académico y sus credenciales institucionales.</p>
+          </div>
+          <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Añadir Docente</button>
+        </div>
+
+        <div style="display:flex;gap:16px;margin-bottom:20px;">
+          <div class="search-bar" style="flex:1;margin-bottom:0;">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Buscar por nombre o correo institucional...">
+          </div>
+          <div class="filter-group" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:10px 16px;">
+            <label><i class="fas fa-filter"></i> Filtrar por Facultad</label>
+            <select>
+              <option>Todas las Facultades</option>
+              <option>Ciencias Informáticas</option>
+              <option>Ciencias Económicas</option>
+              <option>Ingeniería Industrial</option>
+              <option>Hotelería y Turismo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Nombre completo</th>
+                <th>Facultad</th>
+                <th>Carrera</th>
+                <th>Correo Institucional</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="user-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">RC</div></td>
+                <td><strong>Dr. Ricardo Cevallos</strong></td>
+                <td>Ciencias Informáticas</td>
+                <td>Ingeniería de Software</td>
+                <td>ricardo.cevallos@uleam.edu.ec</td>
+                <td><span class="badge badge-green">ACTIVO</span></td>
+                <td>
+                  <div class="action-icons">
+                    <button title="Horario"><i class="fas fa-calendar"></i></button>
+                    <button title="Editar"><i class="fas fa-pen"></i></button>
+                    <button title="Eliminar"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="user-avatar" style="background:linear-gradient(135deg,#f97316,#eab308);">ML</div></td>
+                <td><strong>Mgs. María López</strong></td>
+                <td>Ciencias Económicas</td>
+                <td>Comercio Exterior</td>
+                <td>maria.lopez@uleam.edu.ec</td>
+                <td><span class="badge badge-green">ACTIVO</span></td>
+                <td>
+                  <div class="action-icons">
+                    <button><i class="fas fa-calendar"></i></button>
+                    <button><i class="fas fa-pen"></i></button>
+                    <button><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="user-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">JP</div></td>
+                <td><strong>Ing. Jorge Párraga</strong></td>
+                <td>Ingeniería Industrial</td>
+                <td>Mecánica</td>
+                <td>jorge.parraga@uleam.edu.ec</td>
+                <td><span class="badge badge-red">INACTIVO</span></td>
+                <td>
+                  <div class="action-icons">
+                    <button><i class="fas fa-calendar"></i></button>
+                    <button><i class="fas fa-pen"></i></button>
+                    <button><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="user-avatar" style="background:linear-gradient(135deg,#22c55e,#14b8a6);">AA</div></td>
+                <td><strong>Dra. Ana Anchundia</strong></td>
+                <td>Hotelería y Turismo</td>
+                <td>Gastronomía</td>
+                <td>ana.anchundia@uleam.edu.ec</td>
+                <td><span class="badge badge-green">ACTIVO</span></td>
+                <td>
+                  <div class="action-icons">
+                    <button><i class="fas fa-calendar"></i></button>
+                    <button><i class="fas fa-pen"></i></button>
+                    <button><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-footer">
+            <span>Mostrando 1 a 4 de 128 docentes</span>
+            <div class="pagination">
+              <button><i class="fas fa-chevron-left"></i></button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Total Docentes</div>
+              <div class="stat-value">128</div>
+            </div>
+            <i class="fas fa-users" style="font-size:28px;color:var(--accent-blue);opacity:0.5;"></i>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Activos Hoy</div>
+              <div class="stat-value">114</div>
+            </div>
+            <i class="fas fa-circle-check" style="font-size:28px;color:var(--accent-green);opacity:0.5;"></i>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Sin Horario</div>
+              <div class="stat-value">6</div>
+            </div>
+            <i class="fas fa-triangle-exclamation" style="font-size:28px;color:var(--accent-yellow);opacity:0.5;"></i>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Promedio Asist.</div>
+              <div class="stat-value">94%</div>
+            </div>
+            <i class="fas fa-chart-line" style="font-size:28px;color:var(--text-secondary);opacity:0.5;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: HORARIOS ===== -->
+    <div class="page" id="page-horarios">
+      <div class="page-content" id="horariosContent"></div>
+    </div>
+
+    <!-- ===== PAGE: JUSTIFICACIONES ===== -->
+    <div class="page" id="page-justificaciones">
+      <div class="page-content" id="justificacionesContent"></div>
+    </div>
+
+    <!-- ===== PAGE: NOTIFICACIONES ===== -->
+    <div class="page" id="page-notificaciones">
+      <div class="page-content" id="notificacionesContent"></div>
+    </div>
+
+    <!-- ===== PAGE: REPORTES ===== -->
+    <div class="page" id="page-reportes">
+      <div class="page-content" id="reportesContent"></div>
+    </div>
+
+    <footer class="app-footer">© 2024 ULEAM Attendance Control System. All Rights Reserved.</footer>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

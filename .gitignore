@@ -1,0 +1,10 @@
+node_modules/
+database.db
+uploads/perfiles/*
+uploads/justificaciones/*
+!uploads/perfiles/.gitkeep
+!uploads/justificaciones/.gitkeep
+.env
+*.log
+.DS_Store
+Thumbs.db
