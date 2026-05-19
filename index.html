@@ -250,22 +250,18 @@
             <h1>Gestión de Docentes</h1>
             <p>Administra el personal académico y sus credenciales institucionales.</p>
           </div>
-          <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Añadir Docente</button>
+          <button class="btn btn-outline" onclick="abrirModalCrear()"><i class="fas fa-user-plus"></i> Añadir Docente</button>
         </div>
 
         <div style="display:flex;gap:16px;margin-bottom:20px;">
           <div class="search-bar" style="flex:1;margin-bottom:0;">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Buscar por nombre o correo institucional...">
+            <input type="text" id="busquedaDocentes" placeholder="Buscar por nombre o correo institucional...">
           </div>
           <div class="filter-group" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:10px 16px;">
             <label><i class="fas fa-filter"></i> Filtrar por Facultad</label>
-            <select>
-              <option>Todas las Facultades</option>
-              <option>Ciencias Informáticas</option>
-              <option>Ciencias Económicas</option>
-              <option>Ingeniería Industrial</option>
-              <option>Hotelería y Turismo</option>
+            <select id="filtroFacultad">
+              <option value="todas">Todas las Facultades</option>
             </select>
           </div>
         </div>
@@ -283,111 +279,65 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><div class="user-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">RC</div></td>
-                <td><strong>Dr. Ricardo Cevallos</strong></td>
-                <td>Ciencias Informáticas</td>
-                <td>Ingeniería de Software</td>
-                <td>ricardo.cevallos@uleam.edu.ec</td>
-                <td><span class="badge badge-green">ACTIVO</span></td>
-                <td>
-                  <div class="action-icons">
-                    <button title="Horario"><i class="fas fa-calendar"></i></button>
-                    <button title="Editar"><i class="fas fa-pen"></i></button>
-                    <button title="Eliminar"><i class="fas fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><div class="user-avatar" style="background:linear-gradient(135deg,#f97316,#eab308);">ML</div></td>
-                <td><strong>Mgs. María López</strong></td>
-                <td>Ciencias Económicas</td>
-                <td>Comercio Exterior</td>
-                <td>maria.lopez@uleam.edu.ec</td>
-                <td><span class="badge badge-green">ACTIVO</span></td>
-                <td>
-                  <div class="action-icons">
-                    <button><i class="fas fa-calendar"></i></button>
-                    <button><i class="fas fa-pen"></i></button>
-                    <button><i class="fas fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><div class="user-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">JP</div></td>
-                <td><strong>Ing. Jorge Párraga</strong></td>
-                <td>Ingeniería Industrial</td>
-                <td>Mecánica</td>
-                <td>jorge.parraga@uleam.edu.ec</td>
-                <td><span class="badge badge-red">INACTIVO</span></td>
-                <td>
-                  <div class="action-icons">
-                    <button><i class="fas fa-calendar"></i></button>
-                    <button><i class="fas fa-pen"></i></button>
-                    <button><i class="fas fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><div class="user-avatar" style="background:linear-gradient(135deg,#22c55e,#14b8a6);">AA</div></td>
-                <td><strong>Dra. Ana Anchundia</strong></td>
-                <td>Hotelería y Turismo</td>
-                <td>Gastronomía</td>
-                <td>ana.anchundia@uleam.edu.ec</td>
-                <td><span class="badge badge-green">ACTIVO</span></td>
-                <td>
-                  <div class="action-icons">
-                    <button><i class="fas fa-calendar"></i></button>
-                    <button><i class="fas fa-pen"></i></button>
-                    <button><i class="fas fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
+            <tbody id="docentesTbody">
+              <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i><br>Cargando docentes...
+              </td></tr>
             </tbody>
           </table>
-          <div class="table-footer">
-            <span>Mostrando 1 a 4 de 128 docentes</span>
-            <div class="pagination">
-              <button><i class="fas fa-chevron-left"></i></button>
-              <button class="active">1</button>
-              <button>2</button>
-              <button>3</button>
-              <button><i class="fas fa-chevron-right"></i></button>
-            </div>
-          </div>
+          <div class="table-footer" id="docentesFooter"></div>
         </div>
 
-        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Total Docentes</div>
-              <div class="stat-value">128</div>
-            </div>
-            <i class="fas fa-users" style="font-size:28px;color:var(--accent-blue);opacity:0.5;"></i>
-          </div>
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Activos Hoy</div>
-              <div class="stat-value">114</div>
-            </div>
-            <i class="fas fa-circle-check" style="font-size:28px;color:var(--accent-green);opacity:0.5;"></i>
-          </div>
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Sin Horario</div>
-              <div class="stat-value">6</div>
-            </div>
-            <i class="fas fa-triangle-exclamation" style="font-size:28px;color:var(--accent-yellow);opacity:0.5;"></i>
-          </div>
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Promedio Asist.</div>
-              <div class="stat-value">94%</div>
-            </div>
-            <i class="fas fa-chart-line" style="font-size:28px;color:var(--text-secondary);opacity:0.5;"></i>
-          </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);" id="docentesStats"></div>
+      </div>
+    </div>
+
+    <!-- ===== MODAL: CREAR/EDITAR DOCENTE ===== -->
+    <div class="modal-overlay" id="modalDocente">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="modalDocenteTitulo">Añadir Nuevo Docente</h2>
+          <button class="modal-close" onclick="cerrarModalDocente()"><i class="fas fa-times"></i></button>
         </div>
+        <form id="formDocente" onsubmit="guardarDocente(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre Completo *</label>
+              <input type="text" id="inputNombre" required placeholder="Ej: Dr. Juan Pérez">
+            </div>
+            <div class="form-group">
+              <label>Correo Institucional *</label>
+              <input type="email" id="inputEmail" required placeholder="usuario@uleam.edu.ec">
+            </div>
+            <div class="form-group">
+              <label>Facultad</label>
+              <input type="text" id="inputFacultad" placeholder="Ej: Ciencias Informáticas">
+            </div>
+            <div class="form-group">
+              <label>Carrera</label>
+              <input type="text" id="inputCarrera" placeholder="Ej: Ingeniería de Software">
+            </div>
+            <div class="form-group" id="campoPassword">
+              <label>Contraseña *</label>
+              <input type="password" id="inputPassword" placeholder="Mínimo 6 caracteres">
+            </div>
+            <div class="form-group">
+              <label>Estado</label>
+              <select id="inputEstado">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Foto de Perfil</label>
+              <input type="file" id="inputFoto" accept="image/*">
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline" onclick="cerrarModalDocente()">Cancelar</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -415,6 +365,7 @@
   </main>
 </div>
 
+<script src="js/docentes.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

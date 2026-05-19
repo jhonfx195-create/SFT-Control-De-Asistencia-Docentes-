@@ -32,7 +32,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ===== Rutas de la API =====
 const authRoutes = require('./routes/auth')(db);
+const docentesRoutes = require('./routes/docentes')(db);
+const perfilRoutes = require('./routes/perfil')(db);
+
 app.use('/api/auth', authRoutes);
+app.use('/api/docentes', docentesRoutes);
+app.use('/api/perfil', perfilRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
