@@ -130,29 +130,39 @@ function cargarDatosDemo(db) {
 
   insertarHorarios();
 
-  // ===== ASISTENCIAS (últimos días) =====
+  // ===== ASISTENCIAS (últimos días — fechas dinámicas) =====
   const insertAsistencia = db.prepare(`
     INSERT INTO asistencias (docente_id, horario_id, fecha, hora_programada, hora_entrada, estado)
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
+  // Generar fechas relativas a hoy
+  function fechaRelativa(diasAtras) {
+    const d = new Date();
+    d.setDate(d.getDate() - diasAtras);
+    return d.toISOString().split('T')[0];
+  }
+
   const insertarAsistencias = db.transaction(() => {
-    // Elena - presente
-    insertAsistencia.run(2, 1, '2023-11-15', '08:00', '07:54', 'presente');
-    insertAsistencia.run(2, 3, '2023-11-14', '09:00', '08:58', 'presente');
-    insertAsistencia.run(2, 2, '2023-11-13', '07:00', '07:02', 'presente');
+    // Elena (id:2) - historial variado
+    insertAsistencia.run(2, 1, fechaRelativa(1), '07:00', '06:54', 'presente');
+    insertAsistencia.run(2, 3, fechaRelativa(2), '09:00', '08:58', 'presente');
+    insertAsistencia.run(2, 2, fechaRelativa(3), '07:00', '07:02', 'presente');
+    insertAsistencia.run(2, 4, fechaRelativa(4), '09:00', '09:15', 'atraso');
+    insertAsistencia.run(2, 1, fechaRelativa(7), '07:00', '06:55', 'presente');
 
-    // Marco - atraso
-    insertAsistencia.run(3, 5, '2023-11-15', '09:30', '09:48', 'atraso');
-    insertAsistencia.run(3, 5, '2023-11-13', '09:30', '09:25', 'presente');
+    // Marco (id:3) - algunos atrasos
+    insertAsistencia.run(3, 5, fechaRelativa(1), '09:30', '09:48', 'atraso');
+    insertAsistencia.run(3, 5, fechaRelativa(3), '09:30', '09:25', 'presente');
+    insertAsistencia.run(3, 7, fechaRelativa(5), '08:00', '07:55', 'presente');
 
-    // Silvia - ausente
-    insertAsistencia.run(4, 8, '2023-11-15', '11:00', null, 'ausente');
-    insertAsistencia.run(4, 9, '2023-11-14', '11:00', '11:05', 'presente');
+    // Silvia (id:4) - una ausencia
+    insertAsistencia.run(4, 8, fechaRelativa(1), '11:00', null, 'ausente');
+    insertAsistencia.run(4, 9, fechaRelativa(2), '11:00', '11:05', 'presente');
 
-    // Julian - presente
-    insertAsistencia.run(5, 10, '2023-11-15', '07:00', '06:58', 'presente');
-    insertAsistencia.run(5, 11, '2023-11-14', '07:00', '07:01', 'presente');
+    // Julian (id:5) - puntual
+    insertAsistencia.run(5, 10, fechaRelativa(1), '07:00', '06:58', 'presente');
+    insertAsistencia.run(5, 11, fechaRelativa(2), '07:00', '07:01', 'presente');
   });
 
   insertarAsistencias();

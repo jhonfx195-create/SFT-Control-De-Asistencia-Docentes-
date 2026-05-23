@@ -80,6 +80,7 @@ navItems.forEach(item => {
     pages.forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + target).classList.add('active');
     // Lazy load pages
+    if (target === 'asistencia') cargarPanelDocente();
     if (target === 'docentes') { cargarDocentes(); initBusquedaDocentes(); }
     if (target === 'horarios') loadHorarios();
     if (target === 'notificaciones') loadNotificaciones();

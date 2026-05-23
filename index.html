@@ -64,6 +64,7 @@
     </div>
     <nav class="sidebar-nav" id="sidebarNav">
       <div class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Panel de Control</div>
+      <div class="nav-item" data-page="asistencia"><i class="fas fa-user-check"></i> Marcar Asistencia</div>
       <div class="nav-item" data-page="docentes"><i class="fas fa-user-graduate"></i> Docentes</div>
       <div class="nav-item" data-page="horarios"><i class="fas fa-calendar-alt"></i> Horarios</div>
       <div class="nav-item" data-page="justificaciones"><i class="fas fa-file-alt"></i> Justificaciones</div>
@@ -341,6 +342,16 @@
       </div>
     </div>
 
+    <!-- ===== PAGE: ASISTENCIA (DOCENTE) ===== -->
+    <div class="page" id="page-asistencia">
+      <div class="page-content" id="panelDocenteContent">
+        <div style="text-align:center;padding:60px;color:var(--text-muted);">
+          <i class="fas fa-spinner fa-spin" style="font-size:32px;"></i>
+          <p style="margin-top:12px;">Cargando panel de asistencia...</p>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== PAGE: HORARIOS ===== -->
     <div class="page" id="page-horarios">
       <div class="page-content" id="horariosContent"></div>
@@ -366,6 +377,7 @@
 </div>
 
 <script src="js/docentes.js"></script>
+<script src="js/asistencias.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

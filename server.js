@@ -34,10 +34,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const authRoutes = require('./routes/auth')(db);
 const docentesRoutes = require('./routes/docentes')(db);
 const perfilRoutes = require('./routes/perfil')(db);
+const asistenciasRoutes = require('./routes/asistencias')(db);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/docentes', docentesRoutes);
 app.use('/api/perfil', perfilRoutes);
+app.use('/api/asistencias', asistenciasRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
