@@ -35,11 +35,15 @@ const authRoutes = require('./routes/auth')(db);
 const docentesRoutes = require('./routes/docentes')(db);
 const perfilRoutes = require('./routes/perfil')(db);
 const asistenciasRoutes = require('./routes/asistencias')(db);
+const horariosRoutes = require('./routes/horarios')(db);
+const justificacionesRoutes = require('./routes/justificaciones')(db);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/docentes', docentesRoutes);
 app.use('/api/perfil', perfilRoutes);
 app.use('/api/asistencias', asistenciasRoutes);
+app.use('/api/horarios', horariosRoutes);
+app.use('/api/justificaciones', justificacionesRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {

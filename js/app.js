@@ -82,111 +82,15 @@ navItems.forEach(item => {
     // Lazy load pages
     if (target === 'asistencia') cargarPanelDocente();
     if (target === 'docentes') { cargarDocentes(); initBusquedaDocentes(); }
-    if (target === 'horarios') loadHorarios();
+    if (target === 'horarios') cargarHorarios();
     if (target === 'notificaciones') loadNotificaciones();
     if (target === 'reportes') loadReportes();
-    if (target === 'justificaciones') loadJustificaciones();
+    if (target === 'justificaciones') cargarJustificaciones();
   });
 });
 
-// ===== HORARIOS PAGE =====
-function loadHorarios() {
-  const el = document.getElementById('horariosContent');
-  if (el.dataset.loaded) return;
-  el.dataset.loaded = '1';
-  el.innerHTML = `
-    <div class="page-header">
-      <div><h1>Schedules Management</h1><p>Assign and monitor faculty work hours across university facilities.</p></div>
-      <div class="header-btns">
-        <button class="btn btn-outline"><i class="fas fa-filter"></i> Filter View</button>
-        <button class="btn btn-primary"><i class="fas fa-plus"></i> Assign New Slot</button>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1.8fr;gap:20px;margin-bottom:24px;">
-      <div>
-        <div class="card" style="margin-bottom:16px;">
-          <div style="color:var(--accent-gold);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Faculty Overview</div>
-          <div style="background:var(--bg-input);border-radius:var(--radius-md);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:rgba(59,130,246,0.15);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--accent-blue);"><i class="fas fa-users"></i></div> Total Teachers</div>
-            <strong style="font-size:20px;">142</strong>
-          </div>
-          <div style="background:var(--bg-input);border-radius:var(--radius-md);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:rgba(59,130,246,0.15);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--accent-blue);"><i class="fas fa-clock"></i></div> Pending Hours</div>
-            <strong style="font-size:20px;">24h</strong>
-          </div>
-        </div>
-        <div class="card">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-            <div class="user-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);width:48px;height:48px;font-size:16px;">ER</div>
-            <div><strong>Dra. Elena Rodriguez</strong><br><small style="color:var(--text-secondary)">Computer Science Faculty</small></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
-            <div style="background:var(--bg-input);padding:12px;border-radius:var(--radius-md);text-align:center;">
-              <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Current Load</div>
-              <strong>32h / Week</strong>
-            </div>
-            <div style="background:var(--bg-input);padding:12px;border-radius:var(--radius-md);text-align:center;">
-              <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Status</div>
-              <strong style="color:var(--accent-green);">● FULL</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <h3 style="font-size:18px;font-weight:700;">Weekly Schedule</h3>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <button class="btn btn-outline" style="padding:6px 10px;font-size:12px;"><i class="fas fa-chevron-left"></i></button>
-            <span style="font-weight:600;">Oct 23 - Oct 29</span>
-            <button class="btn btn-outline" style="padding:6px 10px;font-size:12px;"><i class="fas fa-chevron-right"></i></button>
-            <div style="display:flex;border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;margin-left:8px;">
-              <button style="padding:6px 12px;background:var(--accent-blue);color:white;font-size:12px;font-weight:600;">WEEK</button>
-              <button style="padding:6px 12px;background:transparent;color:var(--text-secondary);font-size:12px;">MONTH</button>
-            </div>
-          </div>
-        </div>
-        <div class="schedule-grid">
-          <table style="width:100%;border-collapse:collapse;">
-            <thead><tr>
-              <th style="padding:10px;font-size:11px;color:var(--text-muted);text-transform:uppercase;">TIME</th>
-              <th style="padding:10px;text-align:center;"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">MON</div><div style="font-weight:600;">23</div></th>
-              <th style="padding:10px;text-align:center;"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">TUE</div><div style="font-weight:600;">24</div></th>
-              <th style="padding:10px;text-align:center;"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">WED</div><div style="font-weight:600;">25</div></th>
-              <th style="padding:10px;text-align:center;"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">THU</div><div style="font-weight:600;">26</div></th>
-            </tr></thead>
-            <tbody>
-              <tr style="border-top:1px solid var(--border-color);">
-                <td style="padding:16px 10px;color:var(--text-muted);font-size:13px;">07:00</td>
-                <td style="padding:8px;"><div style="background:rgba(239,68,68,0.1);border-left:3px solid var(--accent-red);border-radius:var(--radius-sm);padding:8px;font-size:12px;"><strong style="color:var(--accent-red);">Software Eng. I</strong><br><small style="color:var(--text-muted);">📍 Ed. A - R102</small></div></td>
-                <td></td>
-                <td style="padding:8px;"><div style="background:rgba(239,68,68,0.1);border-left:3px solid var(--accent-red);border-radius:var(--radius-sm);padding:8px;font-size:12px;"><strong style="color:var(--accent-red);">Software Eng. I</strong><br><small style="color:var(--text-muted);">📍 Ed. A - R102</small></div></td>
-                <td></td>
-              </tr>
-              <tr style="border-top:1px solid var(--border-color);">
-                <td style="padding:16px 10px;color:var(--text-muted);font-size:13px;">09:00</td>
-                <td></td>
-                <td style="padding:8px;"><div style="background:rgba(34,197,94,0.1);border-left:3px solid var(--accent-green);border-radius:var(--radius-sm);padding:8px;font-size:12px;"><strong style="color:var(--accent-green);">Database Mgmt.</strong><br><small style="color:var(--text-muted);">📍 Lab 4 - Main</small></div></td>
-                <td></td>
-                <td style="padding:8px;"><div style="background:rgba(34,197,94,0.1);border-left:3px solid var(--accent-green);border-radius:var(--radius-sm);padding:8px;font-size:12px;"><strong style="color:var(--accent-green);">Database Mgmt.</strong><br><small style="color:var(--text-muted);">📍 Lab 4 - Main</small></div></td>
-              </tr>
-              <tr style="border-top:1px solid var(--border-color);">
-                <td style="padding:16px 10px;color:var(--text-muted);font-size:13px;">11:00</td>
-                <td></td><td></td><td></td><td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;">Available Modules for Assignment</h3>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
-      <div class="card"><span class="badge badge-blue" style="margin-bottom:10px;">ENGINEERING</span><h4>Data Structures II</h4><small style="color:var(--text-secondary);">4 Credits • 6h/week</small><div style="margin-top:10px;font-size:12px;color:var(--text-muted);"><i class="fas fa-user"></i> 2 Qualified Lecturers</div></div>
-      <div class="card"><span class="badge badge-orange" style="margin-bottom:10px;">ARCHITECTURE</span><h4>Urban Planning III</h4><small style="color:var(--text-secondary);">3 Credits • 4h/week</small><div style="margin-top:10px;font-size:12px;color:var(--text-muted);"><i class="fas fa-hourglass-half"></i> Awaiting Assignment</div></div>
-      <div class="card"><span class="badge badge-red" style="margin-bottom:10px;">ENGINEERING</span><h4>Ethics & Law</h4><small style="color:var(--text-secondary);">2 Credits • 2h/week</small><div style="margin-top:10px;font-size:12px;color:var(--text-muted);"><i class="fas fa-user"></i> Dr. Arnaldo Silva</div></div>
-      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border-style:dashed;cursor:pointer;"><i class="fas fa-file-circle-plus" style="font-size:28px;color:var(--text-muted);margin-bottom:8px;"></i><span style="font-size:12px;font-weight:600;text-transform:uppercase;color:var(--text-muted);">New Module</span></div>
-    </div>
-  `;
-}
+
+
 
 // ===== NOTIFICACIONES PAGE =====
 function loadNotificaciones() {
@@ -280,18 +184,4 @@ function barItem(name, pct, color) {
   return `<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>${name}</span><strong>${pct}%</strong></div><div style="height:8px;background:var(--bg-input);border-radius:4px;overflow:hidden;"><div style="width:${pct}%;height:100%;background:var(--accent-${color});border-radius:4px;"></div></div></div>`;
 }
 
-// ===== JUSTIFICACIONES (placeholder) =====
-function loadJustificaciones() {
-  const el = document.getElementById('justificacionesContent');
-  if (el.dataset.loaded) return;
-  el.dataset.loaded = '1';
-  el.innerHTML = `
-    <div class="page-header"><div><h1>Justificaciones</h1><p>Gestionar justificaciones de ausencias docentes.</p></div><button class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Justificación</button></div>
-    <div class="table-container"><table><thead><tr><th>Docente</th><th>Fecha</th><th>Motivo</th><th>Documento</th><th>Estado</th><th>Acciones</th></tr></thead>
-    <tbody>
-      <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="user-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">ER</div><strong>Dra. Elena Rodriguez</strong></div></td><td>12 Nov, 2023</td><td>Cita médica</td><td><span class="badge badge-blue"><i class="fas fa-file-pdf"></i> PDF</span></td><td><span class="badge badge-green">Aprobada</span></td><td><div class="action-icons"><button><i class="fas fa-eye"></i></button><button><i class="fas fa-check"></i></button><button><i class="fas fa-times"></i></button></div></td></tr>
-      <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="user-avatar" style="background:linear-gradient(135deg,#f97316,#eab308);">MV</div><strong>Prof. Marco Velez</strong></div></td><td>14 Nov, 2023</td><td>Emergencia familiar</td><td><span class="badge badge-blue"><i class="fas fa-file-image"></i> IMG</span></td><td><span class="badge badge-yellow">Pendiente</span></td><td><div class="action-icons"><button><i class="fas fa-eye"></i></button><button><i class="fas fa-check"></i></button><button><i class="fas fa-times"></i></button></div></td></tr>
-      <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="user-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);">JT</div><strong>Lcdo. Juan Toro</strong></div></td><td>15 Nov, 2023</td><td>Sin justificación</td><td><span class="badge badge-gray">N/A</span></td><td><span class="badge badge-red">Rechazada</span></td><td><div class="action-icons"><button><i class="fas fa-eye"></i></button><button><i class="fas fa-check"></i></button><button><i class="fas fa-times"></i></button></div></td></tr>
-    </tbody></table></div>
-  `;
-}
+
