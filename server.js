@@ -37,6 +37,7 @@ const perfilRoutes = require('./routes/perfil')(db);
 const asistenciasRoutes = require('./routes/asistencias')(db);
 const horariosRoutes = require('./routes/horarios')(db);
 const justificacionesRoutes = require('./routes/justificaciones')(db);
+const dashboardRoutes = require('./routes/dashboard')(db);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/docentes', docentesRoutes);
@@ -44,6 +45,7 @@ app.use('/api/perfil', perfilRoutes);
 app.use('/api/asistencias', asistenciasRoutes);
 app.use('/api/horarios', horariosRoutes);
 app.use('/api/justificaciones', justificacionesRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
